@@ -86,27 +86,43 @@ const checkboxCheckValidity = (entries) => {
   return entries.checked;
 };
 
+// show errors messages
+function errorEntries(entries, error) {
+  entries.parentElement.setAttribute("data-error-visible", true);
+  entries.parentElement.setAttribute("data-error", error);
+  console.log(entries.parentElement);
+}
+
 function validate(event) {
   event.preventDefault();
   if (!nameCheckValidity(firstEntries.value)) {
-    console.log("bad firstname");
+    errorEntries(firstEntries, error.name);
   }
   if (!nameCheckValidity(lastEntries.value)) {
-    console.log("bad lastname");
+    errorEntries(lastEntries, error.name);
   }
   if (!emailCheckValidity(emailEntries.value)) {
-    console.log("bad email");
+    errorEntries(emailEntries, error.email);
   }
   if (!birthdateCheckValidity(birthdateEntries.value)) {
-    console.log("bad birthdate");
+    errorEntries(birthdateEntries, error.birthdate);
   }
   if (!quantityCheckValidity(quantityEntries.value)) {
-    console.log("bad quantity");
+    errorEntries(quantityEntries, error.quantity);
   }
   if (!locationCheckValidity(locationEntries)) {
-    console.log("bad location");
+    errorEntries(locationEntries, error.location);
   }
   if (!checkboxCheckValidity(checkboxEntries)) {
-    console.log("bad checkbox");
+    errorEntries(checkboxEntries, error.checkbox);
   }
 }
+
+const error = {
+  name: "Veuillez entrer 2 caractères ou plus pour le champ du nom.",
+  email: "Veuillez entrer une adresse email correcte.",
+  birthdate: "Vous devez entrer votre date de naissance.",
+  quantity: "Vous devez entrer un nombre correcte.",
+  location: "Vous devez choisir une option.",
+  checkbox: "Vous devez vérifier que vous acceptez les termes et conditions.",
+};
