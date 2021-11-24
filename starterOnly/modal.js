@@ -88,33 +88,51 @@ const checkboxCheckValidity = (entries) => {
 
 // show errors messages
 function errorEntries(entries, error) {
-  entries.parentElement.setAttribute("data-error-visible", true);
-  entries.parentElement.setAttribute("data-error", error);
-  console.log(entries.parentElement);
+  let parent;
+  NodeList.prototype.isPrototypeOf(entries)
+    ? (parent = entries[0].parentNode)
+    : (parent = entries.parentNode);
+  parent.setAttribute("data-error-visible", true);
+  parent.setAttribute("data-error", error);
+}
+
+function formValidationCorrect() {
+  // show confirm modal
 }
 
 function validate(event) {
   event.preventDefault();
+  let allClear = true;
   if (!nameCheckValidity(firstEntries.value)) {
     errorEntries(firstEntries, error.name);
+    allClear = false;
   }
   if (!nameCheckValidity(lastEntries.value)) {
     errorEntries(lastEntries, error.name);
+    allClear = false;
   }
   if (!emailCheckValidity(emailEntries.value)) {
     errorEntries(emailEntries, error.email);
+    allClear = false;
   }
   if (!birthdateCheckValidity(birthdateEntries.value)) {
     errorEntries(birthdateEntries, error.birthdate);
+    allClear = false;
   }
   if (!quantityCheckValidity(quantityEntries.value)) {
     errorEntries(quantityEntries, error.quantity);
+    allClear = false;
   }
   if (!locationCheckValidity(locationEntries)) {
     errorEntries(locationEntries, error.location);
+    allClear = false;
   }
   if (!checkboxCheckValidity(checkboxEntries)) {
     errorEntries(checkboxEntries, error.checkbox);
+    allClear = false;
+  }
+  if (allClear) {
+    formValidationCorrect();
   }
 }
 
