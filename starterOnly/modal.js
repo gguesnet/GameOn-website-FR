@@ -22,6 +22,7 @@ const locationEntries = document.querySelectorAll(
   ".checkbox-input[type=radio]"
 );
 const checkboxEntries = document.getElementById("checkbox1");
+const modalBody = document.querySelector(".modal-body");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -96,8 +97,12 @@ function errorEntries(entries, error) {
   parent.setAttribute("data-error", error);
 }
 
+// show modal success
 function formValidationCorrect() {
-  // show confirm modal
+  modalBody.innerHTML = `<div class="modal-confirmation">
+  <p style="text-align: center;line-height: 1.5;">Thank you for<br>submitting your<br>registration details</p>
+  </div>
+  <input class="btn-submit" value="Fermer" onClick="closeModal()">`;
 }
 
 function validate(event) {
