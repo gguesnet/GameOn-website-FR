@@ -22,7 +22,7 @@ const locationEntries = document.querySelectorAll(
   ".checkbox-input[type=radio]"
 );
 const checkboxEntries = document.getElementById("checkbox1");
-const modalBody = document.querySelector(".modal-body");
+const modalSuccess = document.querySelector(".modal-success");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -30,12 +30,15 @@ closeBtn.addEventListener("click", closeModal);
 
 // launch modal form
 function launchModal() {
+  removeAlerts();
   modalbg.style.display = "block";
 }
 
 // close modal form
 function closeModal() {
+  removeAlerts();
   modalbg.style.display = "none";
+  modalSuccess.style.display = "none";
 }
 
 // check the validity of the names
@@ -51,14 +54,11 @@ const emailCheckValidity = (entries) => {
 
 // check the validity of the birthdate
 const birthdateCheckValidity = (entries) => {
-  const birthdate = new Date(entries);
-  const today = new Date();
-  if (birthdate.toString() !== "Invalid Date") {
-    if (
-      birthdate.getDate() >= today.getDate() &&
-      birthdate.getMonth() == today.getMonth() &&
-      birthdate.getFullYear() == today.getFullYear()
-    ) {
+  const birthdate = Date.parse(entries);
+  const today = new Date().getTime();
+  console.log(birthdate, birthdate.toString());
+  if (birthdate !== "Invalid Date") {
+    if (birthdate >= today) {
       return false;
     } else {
       return true;
@@ -71,7 +71,7 @@ const birthdateCheckValidity = (entries) => {
 // check the validity of the quantity
 const quantityCheckValidity = (entries) => {
   const quantityRegex = new RegExp("^[0-9]+$");
-  return quantityRegex.test(entries);
+  return quantityRegex.test(entries) && entries > 0 ? true : false;
 };
 
 // check the validity of the location
@@ -99,14 +99,24 @@ function errorEntries(entries, error) {
 
 // show modal success
 function formValidationCorrect() {
-  modalBody.innerHTML = `<div class="modal-confirmation">
-  <p style="text-align: center;line-height: 1.5;">Thank you for<br>submitting your<br>registration details</p>
-  </div>
-  <input class="btn-submit" value="Fermer" onClick="closeModal()">`;
+  closeModal();
+  form.reset();
+  modalSuccess.style.display = "block";
+}
+
+function removeAlerts() {
+  const invalidFields = document.querySelectorAll(
+    '.formData[data-error-visible="true"]'
+  );
+  for (let field of invalidFields) {
+    field.setAttribute("data-error-visible", false);
+    field.setAttribute("data-error", "");
+  }
 }
 
 function validate(event) {
   event.preventDefault();
+  removeAlerts();
   let allClear = true;
   if (!nameCheckValidity(firstEntries.value)) {
     errorEntries(firstEntries, error.name);

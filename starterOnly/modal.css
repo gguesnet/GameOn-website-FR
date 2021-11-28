@@ -94,17 +94,6 @@ img {
   }
 }
 
-@media screen and (max-width: 540px) {
-  .topnav a {
-    display: none;
-  }
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
-  }
-}
-
 main {
   font-size: 130%;
   font-weight: bolder;
@@ -223,7 +212,7 @@ input {
   display: block;
   margin-top: 7px;
   margin-bottom: 7px;
-  text-align: right;
+  text-align: left;
   line-height: 0.3;
   opacity: 0;
   transition: 0.3s;
@@ -523,6 +512,25 @@ footer {
   .copyrights {
     margin-top: 50px;
     text-align: center;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .topnav a {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+  .header-logo {
+    width: 80%;
+  }
+  .hero-headline {
+    font-size: 3rem;
+  }
+  .hero-content {
+    min-width: auto;
   }
 }
 
